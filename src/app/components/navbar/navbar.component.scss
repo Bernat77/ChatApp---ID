@@ -1,0 +1,13 @@
+span{
+    color : gold;
+}
+
+
+a{
+    color: white;
+    margin-left: 3em;
+
+    &.active{
+        border-bottom: 3px solid gold;
+    }
+}
