@@ -39,11 +39,11 @@ export class LoginComponent implements OnInit {
   public submit(): void {
     // TODO call the auth service
     this.loadingService.isLoading.next(true);
-
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       console.log(`Email: ${email}, Password: ${password}`);
       this.loadingService.isLoading.next(false);
+
     } else {
       const failedLoginAlert = new Alert('Correo o password incorrecto.', AlertType.Danger);
       setTimeout(() => {

@@ -4,6 +4,7 @@ import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { Alert } from 'src/app/classes/alert';
 import { AlertService } from 'src/app/services/alert.service';
 import { AlertType } from 'src/app/enums/alert-type.enum';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,9 @@ export class SignupComponent implements OnInit {
   public signupForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder,private alertService: AlertService) {
+  constructor(private fb: FormBuilder, 
+    private alertService: AlertService,
+    private loadingService: LoadingService) {
     this.createForm();
 
   }
@@ -33,17 +36,22 @@ export class SignupComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
- 
+
   public submit(): void {
     // TODO call the auth service
+    this.loadingService.isLoading.next(true);
     if (this.signupForm.valid) {
       const { email, password } = this.signupForm.value;
       console.log(`Email: ${email}, Password: ${password}`);
     } else {
       const failedLoginAlert = new Alert('Correo o password incorrecto.', AlertType.Danger);
-      this.alertService.alerts.next(failedLoginAlert);
+      setTimeout(() => {
+        this.loadingService.isLoading.next(false);
+        this.alertService.alerts.next(failedLoginAlert);
+      }, 2000);
+
     }
   }
- 
+
 
 }

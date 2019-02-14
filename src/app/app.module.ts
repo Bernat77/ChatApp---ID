@@ -24,6 +24,7 @@ import { ChatWindowComponent } from './pages/chat/component/chat-window/chat-win
 import { AlertService } from './services/alert.service';
 import { AlertModule } from 'ngx-bootstrap';
 import {LoadingService } from './services/loading.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {LoadingService } from './services/loading.service';
   providers: [
     AlertService,
     NgxLoadingModule,
-    LoadingService
+    LoadingService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
