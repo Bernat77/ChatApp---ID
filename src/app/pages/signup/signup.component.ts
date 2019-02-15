@@ -4,7 +4,10 @@ import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { Alert } from 'src/app/classes/alert';
 import { AlertService } from 'src/app/services/alert.service';
 import { AlertType } from 'src/app/enums/alert-type.enum';
-import { LoadingService } from 'src/app/services/loading.service';
+import { LoadingService } from 'src/app/services/loading.service'; 
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,16 +18,23 @@ export class SignupComponent implements OnInit {
 
 
   public signupForm: FormGroup;
+  private subscriptions: Subscription[] = [];
+  private returnUrl: string;
 
 
   constructor(private fb: FormBuilder, 
     private alertService: AlertService,
-    private loadingService: LoadingService) {
+    private loadingService: LoadingService,
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute) {
     this.createForm();
 
   }
 
   ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/chat';
+
   }
 
 
@@ -42,7 +52,14 @@ export class SignupComponent implements OnInit {
     this.loadingService.isLoading.next(true);
     if (this.signupForm.valid) {
       const { email, password } = this.signupForm.value;
-      console.log(`Email: ${email}, Password: ${password}`);
+      this.subscriptions.push(
+        this.auth.login(email, password).subscribe(success => {
+          if (success) {
+            this.router.navigateByUrl(this.returnUrl);
+          }
+          this.loadingService.isLoading.next(false);
+        })
+      );
     } else {
       const failedLoginAlert = new Alert('Correo o password incorrecto.', AlertType.Danger);
       setTimeout(() => {
