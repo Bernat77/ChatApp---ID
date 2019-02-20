@@ -62,21 +62,29 @@ export class LoginComponent implements OnInit {
         this.auth.login(email, password).subscribe(success => {
           if (success) {
             this.router.navigateByUrl(this.returnUrl);
+          } else {
+            this.displayFailedLogin();
+            this.loadingService.isLoading.next(false);
           }
-          this.loadingService.isLoading.next(false);
+
         })
       );
 
 
     } else {
       //setTimeout(() => {
-      const failedLoginAlert = new Alert('Correo o password incorrecto.', AlertType.Danger);
 
+      this.displayFailedLogin();
       this.loadingService.isLoading.next(false);
-      this.alertService.alerts.next(failedLoginAlert);
+
       //}, 2000);
 
     }
+  }
+
+  public displayFailedLogin(): void {
+    const failedLoginAlert = new Alert('Correo o password incorrecto.', AlertType.Danger);
+    this.alertService.alerts.next(failedLoginAlert);
   }
 
 
