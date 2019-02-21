@@ -64,9 +64,8 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl(this.returnUrl);
           } else {
             this.displayFailedLogin();
-            this.loadingService.isLoading.next(false);
           }
-
+          this.loadingService.isLoading.next(false);
         })
       );
 
@@ -82,10 +81,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public displayFailedLogin(): void {
-    const failedLoginAlert = new Alert('Correo o password incorrecto.', AlertType.Danger);
+  private displayFailedLogin(): void {
+    const failedLoginAlert = new Alert('Invalid email/password combination, try again.', AlertType.Danger);
     this.alertService.alerts.next(failedLoginAlert);
   }
+
 
 
 

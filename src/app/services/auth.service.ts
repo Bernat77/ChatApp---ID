@@ -6,7 +6,7 @@ import { AlertService } from './alert.service';
 import { Alert } from '../classes/alert';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { switchMap } from 'rxjs/operators';
 
 
@@ -65,12 +65,11 @@ export class AuthService {
     );
   }
 
-
-
   public logout(): void {
-    // al pulsar sobre logout ira a la login y saltara el msj
-    // TODO fetch with firebase function
-    this.router.navigate(['/login']);
-    this.alertService.alerts.next(new Alert('You have been signed out'));
+    // Call Firebase logout function
+    this.afAuth.auth.signOut().then(() => {
+      this.router.navigate(['/login']);
+      this.alertService.alerts.next(new Alert('You have been signed out.'));
+    });
   }
 }
