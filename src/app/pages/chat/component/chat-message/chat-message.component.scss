@@ -1,5 +1,37 @@
+@import '../../../../../styles/variables.scss';
+
+
+.name{
+    text-decoration: underline;
+    color:rgb(73, 164, 250);
+    margin-left:10px;
+}
+
+.timestamp{
+    color:gray;
+    margin-left:15px;
+}
+
+.message{
+    color:black;
+    margin:15px;
+}
+
+@media(max-width:400px){
 img{
-    height:70px;
-    width:70px;
+    height:$avatar-sm !important;
+    width:$avatar-sm !important;
     margin:9px;
+}
+
+}
+
+@media(min-width:401px){
+
+    img{
+        height:$avatar-md !important;
+        width:$avatar-md !important;
+        margin:9px;
+    }
+    
 }

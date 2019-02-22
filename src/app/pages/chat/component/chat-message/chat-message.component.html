@@ -2,7 +2,7 @@
   <img [src]="message.sender.photoUrl" class="rounded-circle">
   <div class="bubble d-flex flex-column">
     <div class="name">
-      {{message.sender.firstName}} {{message.sender.lastName}}
+      <b>{{message.sender.firstName}} {{message.sender.lastName}}</b>
     </div>
     <small class="timestamp">
       {{message.createdAt | date:'medium'}}
