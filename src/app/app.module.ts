@@ -31,6 +31,7 @@ import { AlertService } from './services/alert.service';
 import { AlertModule } from 'ngx-bootstrap';
 import {LoadingService } from './services/loading.service';
 import { AuthService } from './services/auth.service';
+import { ChatroomService } from './services/chatroom.service';
 
 //guards
 import { AuthGuard } from './guards/auth.guard';
@@ -66,7 +67,8 @@ import { AuthGuard } from './guards/auth.guard';
     NgxLoadingModule,
     LoadingService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    ChatroomService
   ],
   bootstrap: [AppComponent]
 })
