@@ -19,6 +19,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 export class LoginComponent implements OnInit {
 
 
+  //public class variables: The form, the suscriptions it'll push and the return url.
   public loginForm: FormGroup;
   private subscriptions: Subscription[] = [];
   private returnUrl: string;
@@ -33,16 +34,18 @@ export class LoginComponent implements OnInit {
     this.createForm();
 
   }
-
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/chat';
 
   }
 
+  //once the component is destroyed, it will unsuscribe the component from each subscription in the array.
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+
+//TThe login form will set the validators.
 
   private createForm(): void {
     this.loginForm = this.fb.group({
@@ -53,34 +56,29 @@ export class LoginComponent implements OnInit {
 
   public submit(): void {
     // TODO call the auth service
-    this.loadingService.isLoading.next(true);
+    this.loadingService.isLoading.next(true); //this starts the loading service.
     if (this.loginForm.valid) {
 
-      const { email, password } = this.loginForm.value;
+      const { email, password } = this.loginForm.value; //thos validates the form inputs
 
       this.subscriptions.push(
-        this.auth.login(email, password).subscribe(success => {
-          if (success) {
-            this.router.navigateByUrl(this.returnUrl);
+        this.auth.login(email, password).subscribe(success => { 
+          if (success) { //if the login its successful
+            this.router.navigateByUrl(this.returnUrl); //go to the returnurl (chat)
           } else {
-            this.displayFailedLogin();
+            this.displayFailedLogin(); //if not it shows the failed login.
           }
-          this.loadingService.isLoading.next(false);
+          this.loadingService.isLoading.next(false); // independent from what happens the loading is canceled
         })
       );
-
-
     } else {
-      //setTimeout(() => {
 
       this.displayFailedLogin();
       this.loadingService.isLoading.next(false);
-
-      //}, 2000);
-
     }
   }
 
+  //this will display the failed alert by creating a new alert and using .next to fire that alert to the subject subscribed on appcomponent
   private displayFailedLogin(): void {
     const failedLoginAlert = new Alert('Invalid email/password combination, try again.', AlertType.Danger);
     this.alertService.alerts.next(failedLoginAlert);

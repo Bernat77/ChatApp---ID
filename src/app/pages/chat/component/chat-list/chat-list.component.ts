@@ -7,7 +7,7 @@ import { ChatroomService } from 'src/app/services/chatroom.service';
   styleUrls: ['./chat-list.component.scss']
 })
 export class ChatListComponent implements OnInit {
-
+//the constructor recives the chatroomservice which uses the html
   constructor(public chatroomService: ChatroomService) { }
 
   ngOnInit() {

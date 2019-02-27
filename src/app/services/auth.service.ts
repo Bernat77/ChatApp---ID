@@ -9,10 +9,6 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { switchMap } from 'rxjs/operators';
 
-
-
-
-// esto es un servicio
 @Injectable()
 export class AuthService {
 

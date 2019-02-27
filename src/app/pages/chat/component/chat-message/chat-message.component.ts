@@ -8,6 +8,7 @@ import { Message } from 'src/app/classes/message';
 })
 export class ChatMessageComponent implements OnInit {
 
+  //it will recieve a message object from input
   @Input() message: Message;
 
   constructor() { }
